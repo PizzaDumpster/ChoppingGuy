@@ -10,7 +10,7 @@ public class GuyWithStick : MonoBehaviour
     [SerializeField] Animator GrassAnim;
     [SerializeField] ParticleSystem myParticalSystem;
     [SerializeField] bool grassIsLong;
-    [SerializeField] GameObject myGrass; 
+    [SerializeField] GameObject myGrass;
 
     // Start is called before the first frame update
     void Start()
@@ -22,32 +22,38 @@ public class GuyWithStick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Collider2D[] myColliders = Physics2D.OverlapCircleAll(transform.position, 4f); 
+        
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            
+            Collider2D[] myColliders = Physics2D.OverlapCircleAll(transform.position, 4f);
             anim.SetTrigger("Swing");
-            foreach(Collider2D collider in myColliders)
+            if (myColliders != null)
             {
-                if (collider.CompareTag("myCircle"))
+                foreach (Collider2D collider in myColliders)
                 {
-                    Destroy(collider.gameObject); 
-                }else if (collider.CompareTag("grass"))
-                {
-                    if (grassIsLong)
+                    if (collider.CompareTag("myCircle"))
                     {
-                        GrassAnim.SetTrigger("Cut");
-                        myParticalSystem.Play();
-                        myGrass.GetComponent<BoxCollider2D>().enabled = false; 
-                        grassIsLong = false; 
+                        Destroy(collider.gameObject);
                     }
+                    else if (collider.CompareTag("grass"))
+                    {
+                        if (grassIsLong)
+                        {
+                            GrassAnim.SetTrigger("Cut");
+                            myParticalSystem.Play();
+                            myGrass.GetComponent<BoxCollider2D>().enabled = false;
+                            grassIsLong = false;
+                        }
+                    }
+
+                    Debug.Log(collider.name);
+
                 }
-                else
-                {
-                    Debug.Log("Miss");
-                }
-                
+            }
+            else
+            {
+                Debug.Log("Miss");
             }
         }
     }
