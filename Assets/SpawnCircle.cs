@@ -12,7 +12,7 @@ public class SpawnCircle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,7 +21,8 @@ public class SpawnCircle : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             GameObject myClone = Instantiate(myCircle, mySpawnPoint.position, Quaternion.identity) as GameObject;
-            myClone.GetComponent<Rigidbody2D>().AddForce(new Vector2(myCircleSpeed,0));
+            myClone.GetComponent<Rigidbody2D>().AddForce(new Vector2(myCircleSpeed, 0));
         }
     }
+
 }
